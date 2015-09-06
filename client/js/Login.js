@@ -7,6 +7,7 @@ var Login = React.createClass({
     router: React.PropTypes.func
   },
   componentWillMount: function() {
+    console.log('window === ', window)
     window.fbAsyncInit = function() {
       console.log("FB.init");
       FB.init({
