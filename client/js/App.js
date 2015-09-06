@@ -92,7 +92,8 @@ var App = React.createClass({
         cookie     : true,  // enable cookies to allow the server to access
                           // the session
         xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.1' // use version 2.1
+        version    : 'v2.1', // use version 2.1
+        channelUrl: 'https://foodieroulette1.herokuapp.com/channel.html'
       });
       // When user logins in, it should display a different page
       var self = this;
