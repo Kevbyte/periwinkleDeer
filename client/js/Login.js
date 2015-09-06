@@ -39,11 +39,11 @@ var Login = React.createClass({
       } 
       console.log("passed the if statement");
       js = d.createElement(s); 
-      js.id = id;
-      console.log("js === ", js);
+      js.id = id;   
       js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
-      console.log("js.src === ", js.src)
+      console.log("js === ", js);
       fjs.parentNode.insertBefore(js, fjs);
+      console.log("fjs.parentNode", fjs.parentNode)
     }(document, 'script', 'facebook-jssdk'));
 
   },
