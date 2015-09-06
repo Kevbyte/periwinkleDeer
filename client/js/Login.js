@@ -27,14 +27,25 @@ var Login = React.createClass({
         this.statusChangeCallback(response);
       }.bind(this));
     }.bind(this);
+
     (function(d, s, id) {
       console.log("document=== ", document)
       var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
+      console.log("d.getElementsByTagName(s)[0] === ", d.getElementsByTagName(s)[0])
+      if (d.getElementById(id)) {
+        console.log("d.getElementById(id) === ", d.getElementById(id))
+        console.log("inside the if statement");
+        return;
+      } 
+      console.log("passed the if statement");
+      js = d.createElement(s); 
+      js.id = id;
+      console.log("js === ", js);
       js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
+      console.log("js.src === ", js.src)
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
   },
 
   componentDidMount: function() {
