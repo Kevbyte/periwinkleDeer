@@ -1,4 +1,5 @@
 var router = require('./App');
+var fbid = '391288257734536';
 
 var Login = React.createClass({  
   contextTypes: {
@@ -11,6 +12,30 @@ var Login = React.createClass({
 
   login: function() {
     var self = this;
+    (function(d, s, id) {
+      console.log("eurekaaaaaaaaaaaaaaaaaa")
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : fbid,
+        cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.1' // use version 2.1
+      });
+      // When user logins in, it should display a different page
+      var self = this;
+      FB.Event.subscribe('auth.login', function (response) {
+        console.log(response,"Logged")
+        self.context.router.transitionTo('/main', null, {id: FB.getUserID()});
+        self.statusChangeCallback(response);
+      });
+    };
     FB.getLoginStatus(function(response){
       if (response.status === 'connected') {
         console.log("login PG")
