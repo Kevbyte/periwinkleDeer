@@ -7,20 +7,8 @@ var Login = React.createClass({
     router: React.PropTypes.func
   },
   componentWillMount: function() {
-    (function(d, s, id) {
-      console.log("document=== ", document.getElementsByTagName(s))
-      console.log("document.getElementById(status)", document.getElementById(status))
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  },
-
-  componentDidMount: function() {
-    localStorage.setItem('currentRoute', '/login');
     window.fbAsyncInit = function() {
+      console.log("FB.nit");
       FB.init({
         appId      : fbid,
         cookie     : true,  // enable cookies to allow the server to access
@@ -39,10 +27,24 @@ var Login = React.createClass({
         this.statusChangeCallback(response);
       }.bind(this));
     }.bind(this);
+    (function(d, s, id) {
+      console.log("document=== ", document)
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  },
+
+  componentDidMount: function() {
+    localStorage.setItem('currentRoute', '/login');
+    
     
   },
 
   testAPI: function() {
+    console.log("testAPI")
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
     console.log('Successful login for: ' + response.name);
@@ -52,6 +54,7 @@ var Login = React.createClass({
   },
 
   statusChangeCallback: function(response) {
+    console.log("FB === ", FB)
     console.log('statusChangeCallback');
     console.log(response);
     // The response object is returned with a status field that lets the
@@ -60,7 +63,7 @@ var Login = React.createClass({
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      console.log("route me to main!")
+      // console.log("route me to main!")
       this.context.router.transitionTo('/main', null, {id: FB.getUserID()});
       this.testAPI();
     } else if (response.status === 'not_authorized') {
@@ -68,6 +71,7 @@ var Login = React.createClass({
       document.getElementById('status').innerHTML = 'Please log ' +
         'into this app.';
     } else {
+      console.log("you need to log in")
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -76,12 +80,14 @@ var Login = React.createClass({
   },
 
   checkLoginState: function() {
+    console.log("checkLoginState")
     FB.getLoginStatus(function(response) {
       this.statusChangeCallback(response);
     }.bind(this));
   },
 
   handleClick: function() {
+    console.log("handleClick")
     FB.login(this.checkLoginState());
   },
 
