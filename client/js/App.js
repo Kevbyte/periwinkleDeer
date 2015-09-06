@@ -12,8 +12,8 @@ var Parameters = require('./Parameters');
 var Map = require('./Map');
 var Display = require('./Display');
 var Profile = require('./Profile');
-// var fbid = '391288257734536';
-var fbid = '389293527934009';
+var fbid = '391288257734536';
+// var fbid = '389293527934009';
 
 var Inbox = React.createClass({
   render: function () {
@@ -36,12 +36,56 @@ var App = React.createClass({
   },
   componentWillMount: function() {
     (function(d, s, id) {
+      console.log("eurekaaaaaaaaaaaaaaaaaa")
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s); js.id = id;
       js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : fbid,
+        cookie     : true,  // enable cookies to allow the server to access
+                          // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.1' // use version 2.1
+      });
+      // When user logins in, it should display a different page
+      var self = this;
+      FB.Event.subscribe('auth.login', function (response) {
+        console.log(response,"Logged")
+        self.context.router.transitionTo('/main', null, {id: FB.getUserID()});
+        self.statusChangeCallback(response);
+      });
+
+
+      FB.getLoginStatus(function(response) {
+        this.statusChangeCallback(response);
+      }.bind(this));
+
+      FB.getLoginStatus(function(response){
+        if (response.status !== 'connected') {
+          self.context.router.transitionTo('/login');
+        } else {
+          FB.api(
+            "/" + response.authResponse.userID + "/picture",
+            function (response) {
+              if (response && !response.error) {
+                /* handle the result */
+                console.log(response.data)
+                self.setState({fbProfile: response.data.url});
+              } 
+            }
+          );
+          FB.api('/me', function(response){
+            console.log('response', response)
+            self.setState({name: response.name});
+          })
+
+        }
+      });
+    }.bind(this);
   },
   
   // Here we run a very simple test of the Graph API after login is
@@ -86,49 +130,7 @@ var App = React.createClass({
 
   render: function () {
 
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : fbid,
-        cookie     : true,  // enable cookies to allow the server to access
-                          // the session
-        xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.1' // use version 2.1
-      });
-      // When user logins in, it should display a different page
-      var self = this;
-      FB.Event.subscribe('auth.login', function (response) {
-        console.log(response,"Logged")
-        self.context.router.transitionTo('/main', null, {id: FB.getUserID()});
-        self.statusChangeCallback(response);
-      });
-
-
-      FB.getLoginStatus(function(response) {
-        this.statusChangeCallback(response);
-      }.bind(this));
-
-      FB.getLoginStatus(function(response){
-        if (response.status !== 'connected') {
-          self.context.router.transitionTo('/login');
-        } else {
-          FB.api(
-            "/" + response.authResponse.userID + "/picture",
-            function (response) {
-              if (response && !response.error) {
-                /* handle the result */
-                console.log(response.data)
-                self.setState({fbProfile: response.data.url});
-              } 
-            }
-          );
-          FB.api('/me', function(response){
-            console.log('response', response)
-            self.setState({name: response.name});
-          })
-
-        }
-      });
-    }.bind(this);
+    
     
     // Insert facebook status check here
 
