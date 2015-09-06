@@ -8,7 +8,7 @@ var reactify = require('reactify');
 var streamify = require('gulp-streamify');
 
 var path = {
-  HTML: ['client/index.html', 'client/channel.html'],
+  HTML: 'client/index.html',
   CSS: 'client/style.css',
   ASSETS: ['client/assets/*.jpg', 'client/assets/*.png', 'client/assets/*.ico'],
   MINIFIED_OUT: 'build.min.js',
