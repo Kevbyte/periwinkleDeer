@@ -1,21 +1,37 @@
 var router = require('./App');
-// var fbid = '391288257734536';
-var fbid = '389293527934009';
+var fbid = '391288257734536';
+// var fbid = '389293527934009';
 
 var Login = React.createClass({  
   contextTypes: {
     router: React.PropTypes.func
   },
   componentWillMount: function() {
-    console.log('window === ', window)
+    (function(d, s, id) {
+      console.log("document=== ", document)
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); 
+      js.id = id;   
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
+      fjs.parentNode.insertBefore(js, fjs);
+      console.log("fjs.parentNode", fjs.parentNode)
+    }(document, 'script', 'facebook-jssdk'));
+    console.log("window.FB === ", window.FB)
+
+  },
+
+  componentDidMount: function() {
+    localStorage.setItem('currentRoute', '/login');
     window.fbAsyncInit = function() {
       console.log("FB.init");
       FB.init({
         appId      : fbid,
         cookie     : true,  // enable cookies to allow the server to access
-                          // the session
+        status     : true,  // the session
         xfbml      : true,  // parse social plugins on this page
-        version    : 'v2.1' // use version 2.1
+        version    : 'v2.1',
+        oath       : true // use version 2.1
       });
       
       // var self = this;
@@ -25,32 +41,12 @@ var Login = React.createClass({
       //   self.statusChangeCallback(response);
       // });
       FB.getLoginStatus(function(response) {
+        console.log("CDM window.FB === ", window.FB)
         this.statusChangeCallback(response);
       }.bind(this));
     }.bind(this);
-
-    (function(d, s, id) {
-      console.log("document=== ", document)
-      var js, fjs = d.getElementsByTagName(s)[0];
-      console.log("d.getElementsByTagName(s)[0] === ", d.getElementsByTagName(s)[0])
-      if (d.getElementById(id)) {
-        console.log("d.getElementById(id) === ", d.getElementById(id))
-        console.log("inside the if statement");
-        return;
-      } 
-      console.log("passed the if statement");
-      js = d.createElement(s); 
-      js.id = id;   
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=" + fbid;
-      console.log("js === ", js);
-      fjs.parentNode.insertBefore(js, fjs);
-      console.log("fjs.parentNode", fjs.parentNode)
-    }(document, 'script', 'facebook-jssdk'));
-
-  },
-
-  componentDidMount: function() {
-    localStorage.setItem('currentRoute', '/login');
+    
+    // window.fbAsyncInit();
     
     
   },
