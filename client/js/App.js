@@ -13,8 +13,8 @@ var Map = require('./Map');
 var Display = require('./Display');
 var Profile = require('./Profile');
 var Restaurant = require('./Restaurant');
-// var fbid = '391288257734536';
-var fbid = '389293527934009';
+var fbid = '391288257734536';
+// var fbid = '389293527934009';
 
 
 var Inbox = React.createClass({
@@ -49,7 +49,7 @@ var App = React.createClass({
   },
 
   componentDidMount: function() {
-    // $('.header-main__user-avatar').hide();
+    
   },
   
   // Here we run a very simple test of the Graph API after login is
@@ -159,31 +159,42 @@ var App = React.createClass({
 
     return (
       <div>
-        <div className="header-main">
-          <div className="container2">
-            <div className="header-main__inner">
-              <div className="header-main__logo">
-                <a href={'#/main?id='+ localStorage.getItem('fb_id')}><img src="../assets/nibbler_icon_01.png" alt=""></img></a>
-              </div>
-              <div className="header-main__user">
-                <a className="header-main__user-details">
-                  <h5 className="header-main__user-name"> {this.state.name} </h5>
-                  <div className="header-main__user-avatar">
-                    <img src={this.state.fbProfile} onClick={this.handleClick.bind(this, 'profile')}></img>
-                  </div>
-                </a>
-              </div>
+      <div className="header-main">
+        <div className="container2">
+          <div className="header-main__inner">
+            <div className="header-main__logo">
+              <a href={'#/main?id='+ localStorage.getItem('fb_id')}><img src="../assets/nibbler_icon_01.png" alt=""></img></a>
+            </div>
+            <div className="header-main__user">
+              <a className="header-main__user-details">
+                <h5 className="header-main__user-name"> {this.state.name} </h5>
+                <div className="header-main__user-avatar">
+                  <img src={this.state.fbProfile} onClick={this.handleClick.bind(this, 'profile')}></img>
+                </div>
+              </a>
             </div>
           </div>
         </div>
-        {/* this is the important part */}
-        <RouteHandler/>
-        <footer className="footer">
-          <div className="container2">
-            <h5 className="footer__heading">A <a className="footer__link" href="https://github.com/periwinkleDeer/periwinkleDeer" target="_blank">Periwinkle Deer</a> Production</h5>
-            <h6 className="footer__copyright">&copy; 2015, Periwinkle Deer</h6>
+      <div className="parallax">
+        <div className="parallax__layer parallax__layer--back">
+          <div className="picture"></div>
+        </div>
+
+        <div className="parallax__layer parallax__layer--base">
+          
           </div>
-        </footer>
+          {/* this is the important part */}
+          <RouteHandler/>
+          
+        </div>
+
+      </div>
+      <footer className="footer">
+        <div className="container2">
+          <h5 className="footer__heading">A <a className="footer__link" href="https://github.com/periwinkleDeer/periwinkleDeer" target="_blank">Periwinkle Deer</a> Production</h5>
+          <h6 className="footer__copyright">&copy; 2015, Periwinkle Deer</h6>
+        </div>
+      </footer>
       </div>
     );
   }

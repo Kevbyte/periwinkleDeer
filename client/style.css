@@ -11,11 +11,41 @@ body, html {
   color: #555;
 }
 
-body {
+/*body {
   background: radial-gradient(ellipse, rgba(255,255,255,0.5), rgba(255,255,255,0.9)), url('../assets/vegetables-for-food-wide.jpg');
   background-size: cover;
   background-position: 80% 90%;
+}*/
+
+.picture {
+  background-image: radial-gradient(ellipse, rgba(255,255,255,0.5), rgba(255,255,255,0.9)), url('../assets/vegetables-for-food-wide.jpg');
+  height: 1000px;
+  background-position: 100% 100%;
 }
+
+.parallax {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.parallax__layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.parallax__layer--base {
+  transform: translateZ(0);
+}
+.parallax__layer--back {
+  
+  transform: translateZ(-2px) scale(3);
+}
+/*.parallax__layer--deep {
+  transform: translateZ(-2px) scale(3);
+}*/
 
 .container {
   margin-top: 50px;
@@ -335,7 +365,7 @@ MAP
   margin: 0 auto;
   width:300px;
   height:auto;
-  margin-bottom: 75px;
+  margin-bottom: 150px;
 }
 
 .gm-style-iw {
@@ -348,7 +378,7 @@ MAP
 
 .iw-title {
   font-family: 'Open Sans Condensed', sans-serif;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 400;
   padding: 10px;
   background-color: #48b5e9;
@@ -465,7 +495,3 @@ Profile
 .usr-msg {
   margin-top: 30px;
 }
-
-
-
-
